@@ -5,14 +5,17 @@ type FarmProperties struct {
 	Start    Endpoint
 	End      Endpoint
 	Links    [][2]string
-	Rooms    map[string]Room
+	Rooms    map[string]*Room
 	Ants	int
 }
 
 type Room struct {
-	x 	int
-	y 	int
-	Row int
+	x 			int
+	y 			int
+	Row 		int
+	Name 		string
+	LinkedRooms []*Room
+	PrevRoom	*Room
 }
 
 type Endpoint struct {
@@ -22,7 +25,7 @@ type Endpoint struct {
 
 
 var farm FarmProperties = FarmProperties{
-	Rooms: make(map[string]Room),
+	Rooms: make(map[string]*Room),
 }
 
 var countRows int

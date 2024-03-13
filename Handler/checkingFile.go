@@ -60,7 +60,7 @@ func initRooms() error {
 			if exist {
 				return errors.New("duplicated room")
 			}
-			farm.Rooms[rowSplit[0]] = Room{x, y, pos}
+			farm.Rooms[rowSplit[0]] = &Room{x, y, pos, rowSplit[0], nil, nil}
 		}
 	}
 	countRows = countRows + len(farm.Rooms)

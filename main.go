@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	handler "lem-in/Handler"
+	algo "lem-in/Algo"
 )
 
 func main() {
-	farm := handler.Handler()
-	fmt.Println(farm)
+	farmInit := handler.Handler()
+	algo.Handler(farmInit)
 }
