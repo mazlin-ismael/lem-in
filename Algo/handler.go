@@ -7,4 +7,5 @@ import (
 func Handler(farmBase handler.FarmProperties) {
 	InitFarm(farmBase)
 	farm.InitRelations()
+	farm.RoomsStepToEnd()
 }

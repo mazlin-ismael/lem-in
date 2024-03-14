@@ -2,6 +2,7 @@ package algo
 
 import (
 	"errors"
+	"fmt"
 	handler "lem-in/Handler"
 )
 
@@ -24,7 +25,6 @@ func checkPossiblePath() error {
 	var indRoom int
 
 	for actual != end {
-
 		if indRoom == len(actual.LinkedRooms) {
 			indRoom = 0
 			if actual.PrevRoom == nil {
@@ -44,3 +44,33 @@ func checkPossiblePath() error {
 	}
 	return nil
 }
+
+func (farm *FarmProperties) RoomsStepToEnd() {
+	actual := farm.Rooms[farm.End.Name]
+	farm.Rooms[farm.End.Name].PrevRoom = nil
+	var prevRoom *handler.Room
+	var indRoom int
+	var stepsToEnd int = 0
+
+	for {
+		if indRoom >= len(actual.LinkedRooms) {
+			indRoom = 0
+			stepsToEnd--
+			if stepsToEnd == -1 {
+				break
+			}
+			actual = actual.PrevRoom
+		}
+		
+		if (actual.LinkedRooms[indRoom].StepToEnd == 0 || actual.LinkedRooms[indRoom].StepToEnd > stepsToEnd) && actual.LinkedRooms[indRoom] != actual.PrevRoom {
+			fmt.Println(actual.Name)
+			stepsToEnd++
+			prevRoom = actual
+			actual = actual.LinkedRooms[indRoom]
+			actual.PrevRoom = prevRoom
+			actual.StepToEnd = stepsToEnd
+		} else {
+			indRoom++
+		}
+	}
+}	
