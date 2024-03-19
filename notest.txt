@@ -25,6 +25,18 @@ en regardant les reponses on dirait que les premieres fourmis a se deplacer sont
 toujours les premieres dans l'ordre mais pas sur du tout
 
 
+le nombre de paths opti differents a trouver avant de faire bouger les ants doit forcement etre <= nombre de links qui comprend le ##start
+donc il faut trouver x <= nombre de links qui comprend le ##start
+
+trouver le path le plus opti pour chaque link de start en regardant s'il gene pas un autre qui pourrait donné une solution plus opti
+
+pour trouver la solution la plus opti possible on fait les calculs d'optimisation de paths y* fois et on regarde la solution ou le nombre
+total de nombre de links utilisés est le plus bas
+
+y = nombre de paths ##start! (factoriel!)
+
+
+
         _________________
        /                 \
   ____[5]----[3]--[1]     |

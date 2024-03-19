@@ -16,7 +16,8 @@ type Room struct {
 	Name 		string
 	LinkedRooms []*Room
 	PrevRoom	*Room
-	StepToEnd	int
+	NextPos  	int	
+	StepsToEnd	int
 }
 
 type Endpoint struct {

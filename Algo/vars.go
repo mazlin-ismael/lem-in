@@ -7,4 +7,5 @@ import (
 type FarmProperties handler.FarmProperties
 
 var farm FarmProperties
-var visitedRoom map[*handler.Room]handler.Room
+
+var paths [][]string

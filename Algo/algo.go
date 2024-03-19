@@ -4,13 +4,15 @@ import (
 	"errors"
 	"fmt"
 	handler "lem-in/Handler"
+	"reflect"
+	"math"
 )
 
-func InitFarm(farmBase handler.FarmProperties) {
+func initFarm(farmBase handler.FarmProperties) {
 	farm = FarmProperties(farmBase)
 }
 
-func (farm *FarmProperties) InitRelations() {
+func (farm *FarmProperties) initRelations() {
 	for _, link := range farm.Links {
 		farm.Rooms[link[0]].LinkedRooms = append(farm.Rooms[link[0]].LinkedRooms, farm.Rooms[link[1]])
 		farm.Rooms[link[1]].LinkedRooms = append(farm.Rooms[link[1]].LinkedRooms, farm.Rooms[link[0]])
@@ -45,32 +47,90 @@ func checkPossiblePath() error {
 	return nil
 }
 
-func (farm *FarmProperties) RoomsStepToEnd() {
-	actual := farm.Rooms[farm.End.Name]
-	farm.Rooms[farm.End.Name].PrevRoom = nil
+func (farm *FarmProperties) InitStepsToEnd() {
+	end := farm.Rooms[farm.End.Name]
+	var steps int = 1
+	var shortsPathsInit bool = true
+
+	for _, room := range end.LinkedRooms {
+		room.StepsToEnd = steps
+	}
+
+	for shortsPathsInit {
+		shortsPathsInit = false
+
+		for _, room := range farm.Rooms {
+			if room.StepsToEnd == steps {
+				for _, room := range room.LinkedRooms {
+					if (room.StepsToEnd > steps+1 || room.StepsToEnd == 0) && room != end {
+						room.StepsToEnd = steps + 1
+						shortsPathsInit = true
+					}
+				}
+			}
+		}
+		steps++
+	}
+}
+
+
+func (farm *FarmProperties) initPaths() {
+	start := farm.Rooms[farm.Start.Name]
+	end := farm.Rooms[farm.End.Name]
+	current := start
 	var prevRoom *handler.Room
-	var indRoom int
-	var stepsToEnd int = 0
+	
+	for _, room := range farm.Rooms {
+		room.PrevRoom = nil
+	}
 
 	for {
-		if indRoom >= len(actual.LinkedRooms) {
-			indRoom = 0
-			stepsToEnd--
-			if stepsToEnd == -1 {
-				break
+		for current != end {
+			for current.NextPos >= len(current.LinkedRooms) {
+				current = current.PrevRoom
+				if current == nil {
+					return
+				}
+				current.LinkedRooms[current.NextPos].PrevRoom = nil
+				current.NextPos++
 			}
-			actual = actual.PrevRoom
+
+			if current.LinkedRooms[current.NextPos].PrevRoom == nil && current.LinkedRooms[current.NextPos] != start || current.LinkedRooms[current.NextPos] == end {
+				prevRoom = current
+				current = current.LinkedRooms[current.NextPos]
+				current.PrevRoom = prevRoom
+				current.NextPos = 0
+			} else {
+				current.NextPos++
+			}
 		}
-		
-		if (actual.LinkedRooms[indRoom].StepToEnd == 0 || actual.LinkedRooms[indRoom].StepToEnd > stepsToEnd) && actual.LinkedRooms[indRoom] != actual.PrevRoom {
-			fmt.Println(actual.Name)
-			stepsToEnd++
-			prevRoom = actual
-			actual = actual.LinkedRooms[indRoom]
-			actual.PrevRoom = prevRoom
-			actual.StepToEnd = stepsToEnd
-		} else {
-			indRoom++
+
+		savePath := current
+		current = current.PrevRoom
+		current.NextPos++
+
+		var path []string
+		var inArray bool
+		for savePath != nil {
+			path = append([]string{savePath.Name}, path...)
+			savePath = savePath.PrevRoom
+		}
+
+		for _, savePath := range paths {
+			if reflect.DeepEqual(savePath, path) {
+				inArray = true
+			}
+		}
+		if !inArray {
+			paths = append(paths, path)
 		}
 	}
-}	
+}
+
+func (farm *FarmProperties) optimalPaths() {
+	maxPath := math.Min(float64(len(farm.Rooms[farm.Start.Name].LinkedRooms)), float64(len(farm.Rooms[farm.End.Name].LinkedRooms)))
+	for _, path := range paths {
+		fmt.Println(path)
+	}
+	fmt.Println(maxPath)
+}

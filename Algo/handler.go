@@ -5,7 +5,9 @@ import (
 )
 
 func Handler(farmBase handler.FarmProperties) {
-	InitFarm(farmBase)
-	farm.InitRelations()
-	farm.RoomsStepToEnd()
+	initFarm(farmBase)
+	farm.initRelations()
+	farm.InitStepsToEnd()
+	farm.initPaths()
+	farm.optimalPaths()
 }
