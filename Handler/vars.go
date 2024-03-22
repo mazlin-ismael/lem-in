@@ -32,4 +32,3 @@ var farm FarmProperties = FarmProperties{
 
 var countRows int
 var firstline string
-
