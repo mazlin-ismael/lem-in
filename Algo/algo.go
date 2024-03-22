@@ -4,8 +4,9 @@ import (
 	"errors"
 	"fmt"
 	handler "lem-in/Handler"
-	"reflect"
 	"math"
+	"reflect"
+	"slices"
 )
 
 func initFarm(farmBase handler.FarmProperties) {
@@ -21,24 +22,24 @@ func (farm *FarmProperties) initRelations() {
 }
 
 func checkPossiblePath() error {
-	actual := farm.Rooms[farm.Start.Name]
+	current := farm.Rooms[farm.Start.Name]
 	var prevRoom *handler.Room
 	end := farm.Rooms[farm.End.Name]
 	var indRoom int
 
-	for actual != end {
-		if indRoom == len(actual.LinkedRooms) {
+	for current != end {
+		if indRoom == len(current.LinkedRooms) {
 			indRoom = 0
-			if actual.PrevRoom == nil {
+			if current.PrevRoom == nil {
 				return errors.New("no path between start and end")
 			}
-			actual = actual.PrevRoom
+			current = current.PrevRoom
 		}
-		
-		if actual.LinkedRooms[indRoom].PrevRoom == nil && actual.LinkedRooms[indRoom].Name != farm.Start.Name {
-			prevRoom = actual
-			actual = actual.LinkedRooms[indRoom]
-			actual.PrevRoom = prevRoom
+
+		if current.LinkedRooms[indRoom].PrevRoom == nil && current.LinkedRooms[indRoom].Name != farm.Start.Name {
+			prevRoom = current
+			current = current.LinkedRooms[indRoom]
+			current.PrevRoom = prevRoom
 			indRoom = 0
 		} else {
 			indRoom++
@@ -73,13 +74,12 @@ func (farm *FarmProperties) InitStepsToEnd() {
 	}
 }
 
-
 func (farm *FarmProperties) initPaths() {
 	start := farm.Rooms[farm.Start.Name]
 	end := farm.Rooms[farm.End.Name]
 	current := start
 	var prevRoom *handler.Room
-	
+
 	for _, room := range farm.Rooms {
 		room.PrevRoom = nil
 	}
@@ -127,10 +127,150 @@ func (farm *FarmProperties) initPaths() {
 	}
 }
 
-func (farm *FarmProperties) optimalPaths() {
-	maxPath := math.Min(float64(len(farm.Rooms[farm.Start.Name].LinkedRooms)), float64(len(farm.Rooms[farm.End.Name].LinkedRooms)))
-	for _, path := range paths {
-		fmt.Println(path)
+func (farm *FarmProperties) optimalPaths() [][][]string {
+	maxPath := int(math.Min(float64(len(farm.Rooms[farm.Start.Name].LinkedRooms)), float64(len(farm.Rooms[farm.End.Name].LinkedRooms))))
+	if farm.Ants < maxPath {
+		maxPath = farm.Ants
 	}
-	fmt.Println(maxPath)
+	
+	combsPaths, bestCombsPaths := initFirstComb(paths)
+	var bestCombPaths [][]string
+
+	for i := 1; i < maxPath; i++ {
+		combsPaths, bestCombPaths = initCombs(combsPaths, paths)
+		bestCombsPaths = append(bestCombsPaths, bestCombPaths)
+	}
+	
+	return bestCombsPaths
+}
+
+func initFirstComb(alonePaths [][]string) ([][][]string, [][][]string) {
+	var combsPaths [][][]string
+	var shortestPath int = len(alonePaths[0])
+	var bestPath []string = alonePaths[0]
+	var bestsCombsPaths [][][]string
+
+	for _, path := range alonePaths {
+		combsPaths = append(combsPaths, [][]string{path})
+
+		if len(path) < shortestPath {
+			shortestPath = len(path)
+			bestPath = path
+		}
+	}
+
+	bestsCombsPaths = append(bestsCombsPaths, [][]string{bestPath})
+	return combsPaths, bestsCombsPaths
+}
+
+func initCombs(currentCombs[][][]string, pathsToAdd [][]string) ([][][]string, [][]string) {
+	var combsPaths [][][]string
+	for i := 0; i < len(pathsToAdd); i++ {
+		for j := 0; j < len(currentCombs); j++ {
+
+			var isInComb bool
+			for _, pathToAdd := range pathsToAdd[i] {
+
+				for _, currentComb := range currentCombs[j] {
+					currentComb = currentComb[1:len(currentComb)-1]
+					if slices.Contains(currentComb, pathToAdd) {
+						isInComb = true
+						break
+					}
+				}
+
+				if isInComb {
+					break
+				}
+			}
+			if !isInComb {
+				newComb := append(currentCombs[j], pathsToAdd[i])
+				combsPaths = append(combsPaths, newComb)
+			}
+
+		}
+	}
+
+	return  combsPaths, initBestComb(combsPaths)
+}
+
+func initBestComb(combsPaths [][][]string) [][]string {
+	var shortestComb int
+	var bestComb [][]string
+
+	for i, combPath := range combsPaths {
+		var comparedComb int
+
+		for _, path := range combPath {
+			if i == 0 {
+				shortestComb += len(path)
+			} else {
+				comparedComb += len(path)
+			}
+		}
+
+		if i == 0 {
+			bestComb = combPath
+		} else if comparedComb < shortestComb {
+			shortestComb = comparedComb
+			bestComb = combPath
+		}
+	}
+	return bestComb
+}
+
+func movingAnts(bestsCombs [][][]string) {
+	var shortestComb [][]string
+	var bestAntsByPath   []int
+	for i, bestComb := range bestsCombs {
+		combSorted, antsByPath := antsToSend(bestComb)
+		if i == 0 {
+			shortestComb = combSorted
+			bestAntsByPath = antsByPath
+		} else if antsByPath[0] + len(combSorted[0])-1 < bestAntsByPath[0] + len(shortestComb[0])-1 {
+			shortestComb = combSorted
+			bestAntsByPath = antsByPath
+		}
+	}
+	displayPathAnts(shortestComb, bestAntsByPath)
+}
+
+func antsToSend(comb [][]string) (combSorted [][]string, antsByPath []int){
+	for i := 0; i < len(comb)-1; i++ {
+		for j := i+1; j < len(comb); j++ {
+			if len(comb[i]) > len(comb[j]) {
+				comb[i], comb[j] = comb[j], comb[i]
+			}
+		}
+	}
+
+	var gapLinks []int
+	for _, path := range comb {
+		gapLinks = append(gapLinks, len(path) - len(comb[0]))
+	}
+
+	var count int
+	var numbersAnts []int = make([]int, len(gapLinks))
+
+	for i := 0; i < farm.Ants; {
+		for j, gapLink := range gapLinks {
+			if gapLink <= count {
+				numbersAnts[j]++
+				i++
+			}
+			if i == farm.Ants {
+				return comb, numbersAnts
+			}
+		}
+		count++
+	}
+	return comb, numbersAnts
+}
+
+func displayPathAnts(bestComb [][]string, antsByPath []int) {
+	for i := range bestComb {
+		bestComb[i] = bestComb[i][1:]
+	}
+	fmt.Println(bestComb)
+	fmt.Println(antsByPath)
 }

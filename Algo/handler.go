@@ -9,5 +9,6 @@ func Handler(farmBase handler.FarmProperties) {
 	farm.initRelations()
 	farm.InitStepsToEnd()
 	farm.initPaths()
-	farm.optimalPaths()
+	bestsCombs := farm.optimalPaths()
+	movingAnts(bestsCombs)
 }
