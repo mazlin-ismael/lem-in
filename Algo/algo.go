@@ -171,9 +171,9 @@ func initCombs(currentCombs[][][]string, pathsToAdd [][]string) ([][][]string, [
 			var isInComb bool
 			for _, pathToAdd := range pathsToAdd[i] {
 
-				for _, currentComb := range currentCombs[j] {
+				for c, currentComb := range currentCombs[j] {
 					currentComb = currentComb[1:len(currentComb)-1]
-					if slices.Contains(currentComb, pathToAdd) {
+					if slices.Contains(currentComb, pathToAdd) || reflect.DeepEqual(currentCombs[j][c], pathsToAdd[i]) {
 						isInComb = true
 						break
 					}
@@ -289,7 +289,7 @@ func displayPathAnts(bestComb [][]string, antsByPath []int) {
 		endDisplaying = true
 		for i, ant := range ants {
 			if ant.Pos < len(bestComb[ant.PathNum]) {
-				fmt.Print("L", i, "-", bestComb[ant.PathNum][ant.Pos])
+				fmt.Print("L", i+1, "-", bestComb[ant.PathNum][ant.Pos])
 				endDisplaying = false
 				ants[i].Pos++
 				if i != len(ants)-1 {
