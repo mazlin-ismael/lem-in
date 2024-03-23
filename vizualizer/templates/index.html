@@ -13,7 +13,22 @@
         </header>
         <section>
             <div class="view">
-                
+                <div class="datasView hidden">
+                    {{range .Rooms}}
+                        <div class="room">
+                            <div class="x">{{.X}}</div>
+                            <div class="y">{{.Y}}</div>
+                            <div class="name">{{.Name}}</div>
+                        </div>
+                    {{end}}
+
+                    {{range .Links}}
+                        <div class="relation">
+                            <div class="firstRoom">{{index . 0}}</div>
+                            <div class="secondRoom">{{index . 1}}</div>
+                        </div>
+                    {{end}}
+                </div>
             </div>
         </section>
         <nav></nav>

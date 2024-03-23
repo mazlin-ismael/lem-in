@@ -21,14 +21,18 @@ func multiplicatorsInit(rooms map[string]*farm.Room) (float64, float64) {
 	return 100/float64(multiX), 100/float64(multiY)
 }
 
-func initNewsRooms(roomsFarm map[string]*farm.Room, multiX, multiY float64) []Room {
-	var rooms []Room
+func initNewsRooms(roomsFarm map[string]*farm.Room, multiX, multiY float64) {
 	for name, roomFarm := range roomsFarm {
-		rooms = append(rooms, Room{
+		rooms[name] = Room{
 			Name: name,
 			X:    int(float64(roomFarm.X) * multiX),
 			Y:    int(float64(roomFarm.Y) * multiY),
-		})
+		}
 	}
-	return rooms
+}
+
+func initLinks(farm farm.FarmProperties) {
+	for _, link := range farm.Links {
+		links = append(links, link)
+	}
 }
