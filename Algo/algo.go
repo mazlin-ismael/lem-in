@@ -300,5 +300,4 @@ func displayPathAnts(bestComb [][]string, antsByPath []int) {
 			}
 		}
 	}
-
 }
