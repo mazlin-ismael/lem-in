@@ -219,7 +219,7 @@ func initBestComb(combsPaths [][][]string) [][]string {
 	return bestComb
 }
 
-func movingAnts(bestsCombs [][][]string) {
+func movingAnts(bestsCombs [][][]string) ([][]string, []int) {
 	var shortestComb [][]string
 	var bestAntsByPath   []int
 	for i, bestComb := range bestsCombs {
@@ -233,6 +233,7 @@ func movingAnts(bestsCombs [][][]string) {
 		}
 	}
 	displayPathAnts(shortestComb, bestAntsByPath)
+	return shortestComb, bestAntsByPath
 }
 
 func antsToSend(comb [][]string) (combSorted [][]string, antsByPath []int){

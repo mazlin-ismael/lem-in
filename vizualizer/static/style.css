@@ -1,10 +1,45 @@
-body, *, ::after, ::before {
+*, ::before, ::after, html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 30px;
+.container {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows:    1fr 6fr;
+    grid-template-areas: "header header" 
+                          "section nav";
+}
+
+.container > * {
+    border: 1px solid black;
+}
+
+header {
+    grid-area: header;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+section {
+    grid-area: section;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section > .view {
+    border: 2px solid gold;
+    background-color: crimson;
+    width: calc(100% - (20px * 2));
+    height: calc(100% - (20px * 2));
+}
+
+nav {
+    grid-area: nav;
 }

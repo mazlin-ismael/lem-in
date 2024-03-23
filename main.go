@@ -8,6 +8,6 @@ import (
 
 func main() {
 	farmInit := handler.Handler()
-	algo.Handler(farmInit)
-	vizu2d.Handler()
+	optimalComb, antsByPaths := algo.Handler(farmInit)
+	vizu2d.Handler(farmInit, optimalComb, antsByPaths)
 }
