@@ -1,0 +1,65 @@
+*, ::before, ::after, html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows:    1fr 6fr;
+    grid-template-areas: "header header" 
+                          "section nav";
+}
+
+.container > * {
+    border: 1px solid black;
+}
+
+header {
+    grid-area: header;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+section {
+    grid-area: section;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: crimson;
+}
+
+section > .view {
+    position: relative;
+    width: calc(100% - (50px * 2));
+    height: calc(100% - (50px * 2));
+}
+
+section > .view > #farm > .room {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    background-color: rgb(98, 0, 255);
+    z-index: 1;
+}
+
+section > .view > #farm > .relation {
+    position: absolute;
+    height: 2px;
+    background-color: rgb(8, 8, 8);
+}
+
+nav {
+    grid-area: nav;
+}

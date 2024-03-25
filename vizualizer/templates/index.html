@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lem-in 2d</title>
+    <link rel="stylesheet" href="/vizualizer/static/css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LEM-IN 2D Visualizer</h1>
+        </header>
+        <section>
+            <div class="view">
+                <div id="datasView" class="hidden">
+                    {{range .Rooms}}
+                        <div class="room">
+                            <div class="x">{{.X}}</div>
+                            <div class="y">{{.Y}}</div>
+                            <div class="name">{{.Name}}</div>
+                        </div>
+                    {{end}}
+
+                    {{range .Links}}
+                        <div class="relation">
+                            <div class="firstRoom">{{index . 0}}</div>
+                            <div class="secondRoom">{{index . 1}}</div>
+                        </div>
+                    {{end}}
+                </div>
+                <div id="farm">
+
+                </div>
+            </div>
+        </section>
+        <nav></nav>
+    </div>
+    <script src="/vizualizer/static/js/main.js"></script>
+</body>
+</html>

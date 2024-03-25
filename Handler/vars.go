@@ -10,8 +10,8 @@ type FarmProperties struct {
 }
 
 type Room struct {
-	x 			int
-	y 			int
+	X 			int
+	Y 			int
 	Row 		int
 	Name 		string
 	LinkedRooms []*Room

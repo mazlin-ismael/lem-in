@@ -1,0 +1,164 @@
+attribuer a chaque room une valeur en fonction du nombre de link la separant du end,
+les ants iront sur les salles ayant la plus petite valeur en priorité tout en prenant en compte les salles deja utilisées
+en prenant l'exemple donné ca ferait :
+( ##end = 0 || 6,4 = 1 || 5,7,3,2 = 2 || 1 = 3 )
+
+ps: certaines room pourraient peut etre avoir plusieurs valeur en fonction des chemins car la route de leur valeur initiale,
+serait peut etre deja utilisée mais la room en question aurait un autre chemin moins court mais utilisable quand meme,
+dans ce cas la l'exemple ressemblerait a :
+( 0 = ##end || 1 = 3,4,4,4,4,.. || 2 = 2,3,4,4,.. || 3 = 2,3,4,.. || 4 = 1 || 5 = 2,3,3,.. || 6 = 1 || 7 = 2,2,4,..)
+les rooms adjacentes a ##end on 1 seule valeur car les ants peuvent acceder directement a la sortie
+
+les ants cherchent autour d'elles une room qui = 0, si y en a pas alors une qui = 1 etc jusqu'a avoir 1 room correspondantes,
+elles cherchent autour d'elles en regardant les rooms qui ont des links avec leur room
+
+
+les rooms deja occupées et leurs paths ne doivent pas etre pris en compte au moment de la recherche autour d'elles
+
+peut etre faire en sorte que tant qu'il y a encore des ants dans le ##start alors on prend pas le ##start en compte
+et on y va pas (ca risque de retarder les ants qui sont deja en attente,
+)
+
+
+
+en regardant les reponses on dirait que les premieres fourmis a se deplacer sont
+toujours les premieres dans l'ordre mais pas sur du tout
+
+
+le nombre de paths opti differents a trouver avant de faire bouger les ants doit forcement etre <= nombre de links qui comprend le ##start
+donc il faut trouver x <= nombre de links qui comprend le ##start
+
+trouver le path le plus opti pour chaque link de start en regardant s'il gene pas un autre qui pourrait donné une solution plus opti
+
+pour trouver la solution la plus opti possible on fait les calculs d'optimisation de paths y* fois et on regarde la solution ou le nombre
+total de nombre de links utilisés est le plus bas
+
+y = nombre de paths ##start! (factoriel!)
+
+
+
+        _________________
+       /                 \
+  ____[5]----[3]--[1]     |
+ /            |    /      |
+[6]---[0]----[4]  /       |
+ \   ________/|  /        |
+  \ /        [2]/________/
+  [7]_________/
+
+
+1 -> 3, 1 -> 2
+3 -> 4, 2 >- 5, 1 -> 3
+4 -> 0, 5 -> 6, 3 -> 4
+6 -> 0, 4 -> 0
+
+
+
+1 -> 3
+  -> 2
+
+3 -> 1
+  -> 4
+  -> 5
+
+4 -> 0
+  -> 3
+  -> 2
+  -> 7
+
+0 -> 4
+  -> 6
+
+6 -> 0
+  -> 7
+  -> 5
+
+7 -> 6
+  -> 2
+  -> 4
+
+2 -> 5
+  -> 4
+  -> 1
+  -> 7
+
+5 -> 2
+  -> 3
+  -> 6
+
+
+1 -> 3 -> 4 -> 0 -> 6 -> 7 -> 2 -> 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[][]chemins{chemin*n}
+
+
+
+[]chemin{room*m}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+chemin0      0     
+chemin1      1
+chemin2      2
+chemin3      0
+chemin4      1
+chemin5      2
+chemin6      0
+chemin7      1
+chemin8      2
+chemin9      0
+chemin10     1
+chemin11     2
+chemin12     0
+chemin13     1
+chemin14     2
+chemin15     3
+chemin16     1
+
+
