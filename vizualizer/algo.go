@@ -1,6 +1,7 @@
 package vizualizer
 
 import (
+	"lem-in/Handler"
 	farm "lem-in/Handler"
 )
 
@@ -12,10 +13,15 @@ func multiplicatorsInit(rooms map[string]*farm.Room) (float64, float64) {
 		if first {
 			multiX, multiY = room.X, room.Y
 			first = false
-		} else if room.X > multiX {
-			multiX = room.X
-		} else if room.Y > multiY {
+
+		} else {
+			if room.X > multiX {
+				multiX = room.X
+			}
+
+			if room.Y > multiY {
 			multiY = room.Y
+			}
 		}
 	}
 	return 100/float64(multiX), 100/float64(multiY)
@@ -35,4 +41,9 @@ func initLinks(farm farm.FarmProperties) {
 	for _, link := range farm.Links {
 		links = append(links, link)
 	}
+}
+
+func initEndpoints(farm Handler.FarmProperties) {
+	start = farm.Start.Name
+	end = farm.End.Name
 }

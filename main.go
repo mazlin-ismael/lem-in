@@ -9,5 +9,5 @@ import (
 func main() {
 	farmInit := handler.Handler()
 	optimalComb, antsByPaths := algo.Handler(farmInit)
-	vizu2d.Handler(farmInit, optimalComb, antsByPaths)
+	vizu2d.WebHandler(farmInit, optimalComb, antsByPaths)
 }

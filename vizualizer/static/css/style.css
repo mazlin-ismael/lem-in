@@ -50,8 +50,12 @@ section > .view > #farm > .room {
     height: 22px;
     border-radius: 20px;
     transform: translate(-50%, -50%);
-    background-color: rgb(98, 0, 255);
     z-index: 1;
+    cursor: pointer;
+}
+
+section > .view > #farm > .room:hover {
+    background-color: orange !important;
 }
 
 section > .view > #farm > .relation {
@@ -62,4 +66,41 @@ section > .view > #farm > .relation {
 
 nav {
     grid-area: nav;
+}
+
+nav > ul {
+    list-style: none;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+nav > ul > li {
+    color:  rgb(98, 0, 255);
+    text-align: center;
+    padding: 4px 0 3px;
+    background-color: #C8AD7F;
+    transition: 200ms;
+    order: 1;
+    cursor: pointer;
+}
+
+nav > ul > li:not(li:first-child) {
+    border-top: 1px solid black;
+}
+
+nav > ul > li:hover {
+    transition: 200ms;
+    filter: brightness(75%) !important;
+}
+
+.start {
+    background-color: #08f000;
+    color: rgb(0, 45, 245);
+    order: 0;
+}
+.end {
+    background-color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+    order: 2;
 }

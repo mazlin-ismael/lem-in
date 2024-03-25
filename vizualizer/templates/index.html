@@ -14,6 +14,8 @@
         <section>
             <div class="view">
                 <div id="datasView" class="hidden">
+                    <div class="EndPointStart">{{.Start}}</div>
+                    <div class="EndPointEnd">{{.End}}</div>
                     {{range .Rooms}}
                         <div class="room">
                             <div class="x">{{.X}}</div>
@@ -34,7 +36,19 @@
                 </div>
             </div>
         </section>
-        <nav></nav>
+        <nav>
+            <ul>
+                {{range .Rooms}}
+                    {{if eq .Name $.Start}}
+                        <li onmouseover="roomLightOn(this)" onmouseout="roomLightOff(this)" class="start">{{.Name}}</li>
+                    {{else if eq .Name $.End}}
+                        <li onmouseover="roomLightOn(this)" onmouseout="roomLightOff(this)" class="end">{{.Name}}</li>
+                    {{else}}
+                        <li onmouseover="roomLightOn(this)" onmouseout="roomLightOff(this)">{{.Name}}</li>
+                    {{end}}
+                {{end}}
+            </ul>
+        </nav>
     </div>
     <script src="/vizualizer/static/js/main.js"></script>
 </body>

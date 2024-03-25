@@ -9,8 +9,10 @@ import (
 
 func hostVizualiser(w http.ResponseWriter, r *http.Request) {
 	var dataView DataViews = DataViews{
-		Rooms: rooms,
-		Links: links,
+		Rooms:	rooms,
+		Links:	links,
+		Start: 	start,
+		End:	end,
 	}
 	
 	tpl, errTpl := template.ParseFiles("vizualizer/templates/index.html")
