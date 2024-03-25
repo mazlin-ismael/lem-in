@@ -35,13 +35,29 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: crimson;
 }
 
 section > .view {
-    border: 2px solid gold;
-    background-color: crimson;
-    width: calc(100% - (20px * 2));
-    height: calc(100% - (20px * 2));
+    position: relative;
+    width: calc(100% - (50px * 2));
+    height: calc(100% - (50px * 2));
+}
+
+section > .view > #farm > .room {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    background-color: rgb(98, 0, 255);
+    z-index: 1;
+}
+
+section > .view > #farm > .relation {
+    position: absolute;
+    height: 2px;
+    background-color: rgb(8, 8, 8);
 }
 
 nav {

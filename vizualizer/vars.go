@@ -2,8 +2,8 @@ package vizualizer
 
 type Room struct {
 	Name 	string
-	X		int
-	Y		int
+	X		float64
+	Y		float64
 }
 
 type DataViews struct {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lem-in 2d</title>
-    <link rel="stylesheet" href="/vizualizer/static/style.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="/vizualizer/static/css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -13,7 +13,7 @@
         </header>
         <section>
             <div class="view">
-                <div class="datasView hidden">
+                <div id="datasView" class="hidden">
                     {{range .Rooms}}
                         <div class="room">
                             <div class="x">{{.X}}</div>
@@ -29,9 +29,13 @@
                         </div>
                     {{end}}
                 </div>
+                <div id="farm">
+
+                </div>
             </div>
         </section>
         <nav></nav>
     </div>
+    <script src="/vizualizer/static/js/main.js"></script>
 </body>
 </html>

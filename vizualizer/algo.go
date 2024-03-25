@@ -25,8 +25,8 @@ func initNewsRooms(roomsFarm map[string]*farm.Room, multiX, multiY float64) {
 	for name, roomFarm := range roomsFarm {
 		rooms[name] = Room{
 			Name: name,
-			X:    int(float64(roomFarm.X) * multiX),
-			Y:    int(float64(roomFarm.Y) * multiY),
+			X:    float64(roomFarm.X) * multiX,
+			Y:    float64(roomFarm.Y) * multiY,
 		}
 	}
 }
