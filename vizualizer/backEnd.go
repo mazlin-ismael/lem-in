@@ -13,6 +13,8 @@ func hostVizualiser(w http.ResponseWriter, r *http.Request) {
 		Links:	links,
 		Start: 	start,
 		End:	end,
+		Comb: 	selectComb,
+		Ants:   antsComb,
 	}
 	
 	tpl, errTpl := template.ParseFiles("vizualizer/templates/index.html")

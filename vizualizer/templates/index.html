@@ -14,6 +14,20 @@
         <section>
             <div class="view">
                 <div id="datasView" class="hidden">
+                    <div class="pathsComb">
+                        {{range .Comb}}
+                            <div class="path">
+                                {{range .}}
+                                    <div class="roomOfPath">{{.}}</div>
+                                {{end}}
+                            </div>
+                        {{end}}
+                    </div>
+                    <div class="antsbyPaths">
+                        {{range .Ants}}
+                            <div class="antsForPath">{{.}}</div>
+                        {{end}}
+                    </div>
                     <div class="EndPointStart">{{.Start}}</div>
                     <div class="EndPointEnd">{{.End}}</div>
                     {{range .Rooms}}
@@ -48,6 +62,9 @@
                     {{end}}
                 {{end}}
             </ul>
+            <div class="movingAnts">
+                <button onclick="movingAntsOnPaths()" class="startAnts">release ants</button>
+            </div>
         </nav>
     </div>
     <script src="/vizualizer/static/js/main.js"></script>

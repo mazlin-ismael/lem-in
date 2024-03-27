@@ -11,11 +11,14 @@ type DataViews struct {
 	Links	[][2]string
 	Start 	string
 	End 	string
+	Comb 	[][]string
+	Ants	[]int
 }
 
 var rooms map[string]Room = make(map[string]Room)
 var links [][2]string
-
+var selectComb [][]string
+var antsComb []int
 
 var start string
 var end string

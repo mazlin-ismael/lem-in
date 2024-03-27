@@ -232,8 +232,9 @@ func movingAnts(bestsCombs [][][]string) ([][]string, []int) {
 			bestAntsByPath = antsByPath
 		}
 	}
+	bestAntsByPathSaved := slices.Clone(bestAntsByPath)
 	displayPathAnts(shortestComb, bestAntsByPath)
-	return shortestComb, bestAntsByPath
+	return shortestComb, bestAntsByPathSaved
 }
 
 func antsToSend(comb [][]string) (combSorted [][]string, antsByPath []int){

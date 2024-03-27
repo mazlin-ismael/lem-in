@@ -1,8 +1,8 @@
 package vizualizer
 
 import (
-	"net/http"
 	farmer "lem-in/Handler"
+	"net/http"
 )
 
 var port = ":2030"
@@ -12,6 +12,8 @@ func WebHandler(farm farmer.FarmProperties, optimalComb [][]string, antsByPaths 
 	initNewsRooms(farm.Rooms, multiX, multiY)
 	initLinks(farm)
 	initEndpoints(farm)
+	initComb(optimalComb)
+	initAntsByPaths(antsByPaths)
 	
 	http.Handle("/vizualizer/static/", http.StripPrefix("/vizualizer/static/", http.FileServer(http.Dir("vizualizer/static"))))
 	http.HandleFunc("/", hostVizualiser)

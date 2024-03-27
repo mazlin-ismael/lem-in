@@ -8,6 +8,9 @@ var lis = document.getElementsByTagName("li")
 var start = document.querySelector(".EndPointStart").textContent
 var end = document.querySelector(".EndPointEnd").textContent
 
+var comb = document.getElementsByClassName("pathsComb")
+var antsPaths = document.getElementsByClassName("antsbyPaths")
+
 function setFarmVizualiser() {
     farm.replaceChildren()
     for (let index = 0; index < rooms.length; index++) {
@@ -16,10 +19,6 @@ function setFarmVizualiser() {
         const x = room.querySelector(".x")
         const y = room.querySelector(".y")
         const name = room.querySelector(".name")
-
-    
-        room.style.left = x.textContent+"%"
-        room.style.top = y.textContent+"%"
     
         const newRoom = document.createElement("div")
         newRoom.style.left = x.textContent+"%"
@@ -28,6 +27,7 @@ function setFarmVizualiser() {
         
         if (name.textContent == start) {
             newRoom.classList.add("start")
+                initStartAnts(x.textContent, y.textContent)
         }
         else if (name.textContent == end) {
             newRoom.classList.add("end")
@@ -108,4 +108,60 @@ function associedNameOff() {
             li.style.filter = "brightness(100%)"
         }
     }
+}
+
+
+function initStartAnts(x, y) {
+    var ants = document.getElementsByClassName("antsForPath")
+    var numberAnts = 0
+    
+    for (index = 0; index < ants.length; index++) {
+        const ant = ants[index]
+        numberAnts += parseInt(ant.textContent)
+    }
+    
+    
+    for (index = 0; index < numberAnts; index++) {
+        var img = document.createElement("img")
+        img.src = "/vizualizer/static/img/ethant.webp"
+        img.alt = "ant" + (index + 1)
+        img.className = "ant"
+        img.style.left = x + "%"
+        img.style.top = y + "%"
+        farm.appendChild(img)
+    }
+}
+
+function movingAntsOnPaths() {
+    var ants = document.getElementsByClassName("ant")
+    var paths = document.getElementsByClassName("path")
+    var comb = []
+
+    for (let index = 0; index < paths.length; index++) {
+        const path = paths[index];
+        var pathOfComb = []
+        let rooms = path.getElementsByClassName("roomOfPath")
+        for (let ind = 0; ind < rooms.length; ind++) {
+            const room = rooms[ind].textContent;
+            pathOfComb.push(room)
+        }
+        comb.push(pathOfComb)
+    }
+
+    movingAnt(ants[0], comb[0])
+}
+
+function movingAnt(ant, path) {
+    var index = 0
+    function moveToNextRoom() {
+        if (index < path.length) {
+            const room = path[index]
+            const nextRoom = document.getElementById(room)
+            ant.style.left = nextRoom.style.left
+            ant.style.top = nextRoom.style.top
+            index++
+            setTimeout(moveToNextRoom, 1100)
+        }
+    }
+    moveToNextRoom()
 }

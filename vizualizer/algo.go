@@ -47,3 +47,11 @@ func initEndpoints(farm Handler.FarmProperties) {
 	start = farm.Start.Name
 	end = farm.End.Name
 }
+
+func initComb(optimalComb [][]string) {
+	selectComb = optimalComb
+}
+
+func initAntsByPaths(antsByPaths []int) {
+	antsComb = antsByPaths
+}
