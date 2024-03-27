@@ -135,8 +135,9 @@ function initStartAnts(x, y) {
 function movingAntsOnPaths() {
     var ants = document.getElementsByClassName("ant")
     var paths = document.getElementsByClassName("path")
-    var comb = []
+    var pathsForAnt = document.getElementsByClassName("antsForPath")
 
+    var comb = []
     for (let index = 0; index < paths.length; index++) {
         const path = paths[index];
         var pathOfComb = []
@@ -148,10 +149,32 @@ function movingAntsOnPaths() {
         comb.push(pathOfComb)
     }
 
-    movingAnt(ants[0], comb[0])
+    var antsByPath = []
+    for (let index = 0; index < pathsForAnt.length; index++) {
+        const pathForAnt = pathsForAnt[index];
+        antsByPath.push(parseInt(pathForAnt.textContent))
+    }
+    
+    var posAnt = 0
+    function newSalve() {
+        var allAntsLaunched = true
+        for (let index = 0; index < antsByPath.length; index++) {
+            const antsOfPath = antsByPath[index];
+            if (antsOfPath > 0) {
+                antsByPath[index]--
+                allAntsLaunched = false
+                movingAnt(ants[posAnt], comb[index])
+                posAnt++
+            }
+        }
+        if (allAntsLaunched == false) {
+            setTimeout(newSalve, 1100)
+        }
+    }
+    newSalve()
 }
 
-function movingAnt(ant, path) {
+async function movingAnt(ant, path) {
     var index = 0
     function moveToNextRoom() {
         if (index < path.length) {
