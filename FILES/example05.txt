@@ -1,4 +1,4 @@
-9
+70
 #rooms
 ##start
 start 0 3
@@ -14,6 +14,9 @@ A0 1 2
 A1 2 1
 A2 4 1
 B0 1 4
+start-hayat
+hayat-end
+hayat 10 10
 B1 2 4
 E2 6 4
 D1 6 3
