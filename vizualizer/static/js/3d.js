@@ -63,7 +63,7 @@ for (let i = 0; i < rooms.length; i++) {
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
     let x = room.querySelector(".x").textContent
     let y = room.querySelector(".y").textContent
-    sphere.position.set(x-50, y, 0)
+    sphere.position.set(x-50, Math.abs(y-100), 0)
     scene.add(sphere)
 }
 
