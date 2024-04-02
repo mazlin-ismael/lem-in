@@ -74,6 +74,10 @@ for (let i = 0; i < rooms.length; i++) {
 }
 
 
+const cylinder = new THREE.CylinderGeometry(15, 15, 15)
+scene.add(cylinder) 
+
+
 
 function animate(time) {
     // box.rotation.x = time / 1000;
