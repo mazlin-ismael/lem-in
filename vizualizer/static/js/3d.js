@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 var rooms = document.getElementsByClassName("room")
 var start = document.querySelector(".EndPointStart").textContent
 var end = document.querySelector(".EndPointEnd").textContent
+const size = 4
+
 
 const renderer = new THREE.WebGLRenderer();
 
@@ -41,17 +43,21 @@ const planeMaterial = new THREE.MeshBasicMaterial({
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(plane)
 plane.rotation.x = -0.5 * Math.PI;
+plane.position.y = -30
 
 const gridHelper = new THREE.GridHelper(100)
 scene.add(gridHelper)
+gridHelper.position.y = -30
 
 
 
 for (let i = 0; i < rooms.length; i++) {
     const room = rooms[i]
     let name = room.querySelector(".name").textContent
-    const sphereGeometry = new THREE.SphereGeometry(2, 50, 50);
-    const sphereMaterial = new THREE.MeshBasicMaterial({wireframe: false})
+    const sphereGeometry = new THREE.SphereGeometry(size, 16, 16);
+    const sphereMaterial = new THREE.MeshBasicMaterial({
+        wireframe: true,
+    })
     if (name == start) {
         sphereMaterial.color = new THREE.Color(0x00FF00)
     } else if (name == end) {
@@ -63,7 +69,7 @@ for (let i = 0; i < rooms.length; i++) {
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
     let x = room.querySelector(".x").textContent
     let y = room.querySelector(".y").textContent
-    sphere.position.set(x-50, Math.abs(y-100), 0)
+    sphere.position.set((x-50), y-30+size, (Math.random()*100)-50)
     scene.add(sphere)
 }
 
