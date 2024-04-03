@@ -7,7 +7,6 @@
     var end = document.querySelector(".EndPointEnd").textContent
     const size = 4
 
-
     const renderer = new THREE.WebGLRenderer();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -50,8 +49,6 @@
     scene.add(gridHelper);
     gridHelper.position.y = -30;
 
-
-
     for (let i = 0; i < rooms.length; i++) {
         const room = rooms[i];
         let name = room.querySelector(".name").textContent;
@@ -74,7 +71,6 @@
         sphere.position.set((x-50), 100-y-30+size, (Math.random()*100)-50);
         scene.add(sphere);
     }
-
 
     for (let i = 0; i < relations.length; i++) {
         const relation = relations[i]
@@ -102,154 +98,10 @@
         scene.add(cylinder);
     }
     
-
-
-
-
     function animate(time) {
-        // box.rotation.x = time / 1000;
-        // box.rotation.y = time / 1000;
         renderer.render(scene, camera)
     }
 
     renderer.setAnimationLoop(animate);
 
-
     renderer.render(scene, camera);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // import * as THREE from 'three';
-// // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-// // const scene = new THREE.Scene();
-// // const camera = new THREE.PerspectiveCamera(35, window.innerWidth/innerHeight, 0.1, 3000);
-
-// // camera.position.z = 100;
-
-// // let rendu = new THREE.WebGLRenderer();
-// // rendu.setSize(window.innerWidth, window.innerHeight);
-// // rendu.setClearColor(0x132644);
-
-// // document.body.appendChild(rendu.domElement);
-
-// // //----------------------------------  DEPOSER ET FRABRIQUER LA FORME ---------------------------------------
-
-// // let forme = new THREE.Group();
-
-// // let geometrie = new THREE.TorusGeometry(0, 10, 100, 50);
-
-// // let materiel = new THREE.MeshNormalMaterial({
-// //     color: 0xff000,
-// //     transparent: true,
-// //     opacity: 1,
-// //     wireframe: true,
-// //     wireframeLinewidth: 5,
-// //     wireframeLinejoin: 'round',
-// //     wirefralLinecap: 'round'
-// // });
-
-
-// // forme.add(new THREE.Mesh(geometrie, materiel));
-// // scene.add(forme);
-
-
-// // let control = new OrbitControls(camera, rendu.domElement)
-// // control.update();
-
-// // let animer = function() {
-// //     requestAnimationFrame(animer)
-// //     forme.rotation.x += 0.01;
-// //     rendu.render(scene, camera);
-// // }
-
-// // animer();
-
-
-
-
-
-
-
-// // //------------------------------------------------------
-// // rendu.render(scene, camera);
