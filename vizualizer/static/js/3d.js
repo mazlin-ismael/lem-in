@@ -2,6 +2,7 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
     var rooms = document.getElementsByClassName("room")
+    var relations = document.getElementsByClassName("relation")
     var start = document.querySelector(".EndPointStart").textContent
     var end = document.querySelector(".EndPointEnd").textContent
     const size = 4
@@ -74,28 +75,33 @@
         scene.add(sphere);
     }
 
-    var startSphere = scene.getObjectByName("start")
-    var endSphere = scene.getObjectByName("end")
 
-    var midPoint = new THREE.Vector3().addVectors(startSphere.position, endSphere.position).multiplyScalar(0.5);
-    var directionVector = new THREE.Vector3().subVectors(endSphere.position, startSphere.position);
+    for (let i = 0; i < relations.length; i++) {
+        const relation = relations[i]
+        var roomOne = relation.querySelector(".firstRoom").textContent
+        var roomTwo = relation.querySelector(".secondRoom").textContent
+        var sphereOne = scene.getObjectByName(roomOne)
+        var sphereTwo = scene.getObjectByName(roomTwo)
+        scene.getObjectByName(roomTwo)
 
-    const geometry = new THREE.CylinderGeometry(3, 3, directionVector.length(), 10, 30)
-    const material = new THREE.MeshBasicMaterial({
-        color: 0x00FFFF,
-        wireframe: true
-    });
-    const cylinder = new THREE.Mesh(geometry, material);
-    cylinder.position.copy(midPoint);
+        var midPoint = new THREE.Vector3().addVectors(sphereOne.position, sphereTwo.position).multiplyScalar(0.5);
+        var directionVector = new THREE.Vector3().subVectors(sphereTwo.position, sphereOne.position);
 
-    // Calcule la rotation de l'axe z
-    var quaternion = new THREE.Quaternion();
-    quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), directionVector.clone().normalize());
-    cylinder.quaternion.copy(quaternion);
+        const geometry = new THREE.CylinderGeometry(3, 3, directionVector.length(), 10, 30)
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00FFFF,
+            wireframe: true
+        });
+        const cylinder = new THREE.Mesh(geometry, material);
+        cylinder.position.copy(midPoint);
 
-
-    scene.add(cylinder);
-
+        // Calcule la rotation de l'axe z
+        var quaternion = new THREE.Quaternion();
+        quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), directionVector.clone().normalize());
+        cylinder.quaternion.copy(quaternion);
+        scene.add(cylinder);
+    }
+    
 
 
 
