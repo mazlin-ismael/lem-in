@@ -68,7 +68,14 @@
         sphere.name = name
         let x = room.querySelector(".x").textContent;
         let y = room.querySelector(".y").textContent;
-        sphere.position.set((x-50), 100-y-30+size, (Math.random()*100)-50);
+        let z = Math.random()*100-50
+        sphere.position.set((x-50), 100-y-30+size, z);
+
+        const boxGeometry = new THREE.BoxGeometry(4, 4, 4);
+        const boxMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+        const boxCaption = new THREE.Mesh(boxGeometry, boxMaterial);
+        boxCaption.position.set(x-50, 100-y-30+size, z)
+        scene.add(boxCaption);
         scene.add(sphere);
     }
 
