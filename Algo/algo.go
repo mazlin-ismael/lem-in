@@ -272,26 +272,29 @@ func antsToSend(comb [][]string) (combSorted [][]string, antsByPath []int){
 func displayPathAnts(bestComb [][]string, antsByPath []int) {
 	var ants []Ant
 	var endDisplaying bool
-
 	for i := range bestComb {
 		bestComb[i] = bestComb[i][1:]
 	}
-
+	var rankAnt = 1
 	for !endDisplaying {
 		for i, ant := range antsByPath {
 			if ant > 0 {
 				ants = append(ants, Ant{
-					Pos: 0,
-					PathNum: i,
+					Pos:	 	0,
+					PathNum: 	i,
+					Rank: 		rankAnt,
 				})
 				antsByPath[i]--
+				rankAnt++
 			}
 		}
-
 		endDisplaying = true
 		for i, ant := range ants {
 			if ant.Pos < len(bestComb[ant.PathNum]) {
-				fmt.Print("L", i+1, "-", bestComb[ant.PathNum][ant.Pos])
+				if i >= len(ants) {
+					break
+				}
+				fmt.Print("L", ant.Rank, "-", bestComb[ant.PathNum][ant.Pos])
 				endDisplaying = false
 				ants[i].Pos++
 				if i != len(ants)-1 {
@@ -299,6 +302,8 @@ func displayPathAnts(bestComb [][]string, antsByPath []int) {
 				} else {
 					fmt.Print("\n")
 				}
+			} else {
+				ants = slices.Delete(ants, i, i+1)
 			}
 		}
 	}

@@ -13,4 +13,5 @@ var paths [][]string
 type Ant struct {
 	Pos 	int
 	PathNum	int
+	Rank 	int
 }
