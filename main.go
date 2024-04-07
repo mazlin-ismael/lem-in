@@ -1,13 +1,15 @@
 package main
 
 import (
-	errFile "lem-in/errFile"
+	"fmt"
 	algo "lem-in/algo"
-	vizu2d   "lem-in/vizualizer"
+	errFile "lem-in/errFile"
+	vizu2d "lem-in/visualizer"
 )
 
 func main() {
 	farmInit := errFile.Handler()
 	optimalComb, antsByPaths := algo.Handler(farmInit)
+	fmt.Println(optimalComb, antsByPaths)
 	vizu2d.WebHandler(farmInit, optimalComb, antsByPaths)
 }

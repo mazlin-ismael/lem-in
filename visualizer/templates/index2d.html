@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lem-in 2d</title>
+    <link href="/visualizer/static/css/main.css" type="text/css" rel="stylesheet">
+    <link href="/visualizer/static/css/style2d.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LEM-IN 2D Visualizer</h1>
+        </header>
+        <section>
+            <div class="view">
+                <div id="datasView" class="hidden">
+                    <div class="pathsComb">
+                        {{range .Comb}}
+                            <div class="path">
+                                {{range .}}
+                                    <div class="roomOfPath">{{.}}</div>
+                                {{end}}
+                            </div>
+                        {{end}}
+                    </div>
+                    <div class="antsbyPaths">
+                        {{range .Ants}}
+                            <div class="antsForPath">{{.}}</div>
+                        {{end}}
+                    </div>
+                    <div class="EndPointStart">{{.Start}}</div>
+                    <div class="EndPointEnd">{{.End}}</div>
+                    {{range .Rooms}}
+                        <div class="room">
+                            <div class="x">{{.X}}</div>
+                            <div class="y">{{.Y}}</div>
+                            <div class="name">{{.Name}}</div>
+                        </div>
+                    {{end}}
+
+                    {{range .Links}}
+                        <div class="relation">
+                            <div class="firstRoom">{{index . 0}}</div>
+                            <div class="secondRoom">{{index . 1}}</div>
+                        </div>
+                    {{end}}
+                </div>
+                <div id="farm">
+
+                </div>
+            </div>
+        </section>
+        <nav>
+            <ul>
+                {{range .Rooms}}
+                    {{if eq .Name $.Start}}
+                        <li onmouseover="roomLightOn(this)" onmouseout="roomLightOff(this)" class="start">{{.Name}}</li>
+                    {{else if eq .Name $.End}}
+                        <li onmouseover="roomLightOn(this)" onmouseout="roomLightOff(this)" class="end">{{.Name}}</li>
+                    {{else}}
+                        <li onmouseover="roomLightOn(this)" onmouseout="roomLightOff(this)">{{.Name}}</li>
+                    {{end}}
+                {{end}}
+            </ul>
+            <div class="movingAnts">
+                <button onclick="movingAntsOnPaths()" class="startAnts">release ants</button>
+            </div>
+        </nav>
+    </div>
+    <script src="/visualizer/static/js/main2d.js"></script>
+</body>
+</html>
