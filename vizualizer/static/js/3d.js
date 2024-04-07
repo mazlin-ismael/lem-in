@@ -71,8 +71,11 @@
         let z = Math.random()*100-50
         sphere.position.set((x-50), 100-y-30+size, z);
 
+         // Créer une texture pour le nom de la sphère
+        const texture = createTextTexture(name);
+
         const boxGeometry = new THREE.BoxGeometry(4, 4, 4);
-        const boxMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+        const boxMaterial = new THREE.MeshBasicMaterial({map: texture, transparent: false});
         const boxCaption = new THREE.Mesh(boxGeometry, boxMaterial);
         boxCaption.position.set(x-50, 100-y-30+size, z)
         scene.add(boxCaption);
@@ -112,3 +115,21 @@
     renderer.setAnimationLoop(animate);
 
     renderer.render(scene, camera);
+
+
+
+// Fonction pour créer une texture à partir d'un texte
+function createTextTexture(text, color = 'white') {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 256;
+    canvas.height = 256;
+
+    ctx.fillStyle = color;
+    ctx.font = '50px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+    return new THREE.CanvasTexture(canvas);
+}
