@@ -1,7 +1,7 @@
 package vizualizer
 
 import (
-	farmer "lem-in/Handler"
+	farmer "lem-in/errFile"
 	"net/http"
 	"fmt"
 )

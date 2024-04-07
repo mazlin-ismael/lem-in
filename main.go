@@ -1,13 +1,13 @@
 package main
 
 import (
-	handler "lem-in/Handler"
-	algo "lem-in/Algo"
+	errFile "lem-in/errFile"
+	algo "lem-in/algo"
 	vizu2d   "lem-in/vizualizer"
 )
 
 func main() {
-	farmInit := handler.Handler()
+	farmInit := errFile.Handler()
 	optimalComb, antsByPaths := algo.Handler(farmInit)
 	vizu2d.WebHandler(farmInit, optimalComb, antsByPaths)
 }

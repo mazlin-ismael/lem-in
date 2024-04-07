@@ -1,8 +1,7 @@
 package vizualizer
 
 import (
-	"lem-in/Handler"
-	farm "lem-in/Handler"
+	farm "lem-in/errFile"
 )
 
 func multiplicatorsInit(rooms map[string]*farm.Room) (float64, float64) {
@@ -43,7 +42,7 @@ func initLinks(farm farm.FarmProperties) {
 	}
 }
 
-func initEndpoints(farm Handler.FarmProperties) {
+func initEndpoints(farm farm.FarmProperties) {
 	start = farm.Start.Name
 	end = farm.End.Name
 }
