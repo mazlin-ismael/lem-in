@@ -91,7 +91,7 @@ func displayPathAnts(bestComb [][]string, antsByPath []int) {
 					fmt.Print("\n")
 				}
 			} else {
-				ants = slices.Delete(ants, i, i+1)
+				ants = slices.Delete(ants, i, i)
 			}
 		}
 	}
