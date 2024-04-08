@@ -42,7 +42,7 @@ func validLink(row string, names []string) (string, string, error) {
 			}
 		}
 	}
-	return "", "", errors.New("bad format")
+	return "", "", errors.New("bad format links")
 }
 
 func duplicatedLink(name1, name2 string) error {

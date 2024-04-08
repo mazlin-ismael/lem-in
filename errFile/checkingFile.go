@@ -8,7 +8,7 @@ import (
 )
 
 func getFile() error {
-	if len(os.Args) != 2 {
+	if len(os.Args) != 2 && os.Args[2] != "--test" {
 		return errors.New("incorrect format args")
 	}
 	file, notFound := os.ReadFile(os.Args[1])
@@ -32,6 +32,9 @@ func numberAnts() error {
 	numberAnts, notInt := strconv.Atoi(firstline)
 	if notInt != nil {
 		return errors.New("bad ants number format")
+	}
+	if numberAnts == 0 {
+		return errors.New("ants number can't be zero")
 	}
 	farm.Ants = numberAnts
 	return nil

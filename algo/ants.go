@@ -77,12 +77,12 @@ func displayPathAnts(bestComb [][]string, antsByPath []int) {
 		}
 		
 		endDisplaying = true
-		for i, ant := range ants {
-			if ant.Pos < len(bestComb[ant.PathNum]) {
-				if i >= len(ants) {
-					break
-				}
-				fmt.Print("L", ant.Rank, "-", bestComb[ant.PathNum][ant.Pos])
+		for i := 0; i < len(ants); i++ {
+			if ants[i].Pos < len(bestComb[ants[i].PathNum]) {
+				// if i >= len(ants) {
+				// 	continue
+				// }
+				fmt.Print("L", ants[i].Rank, "-", bestComb[ants[i].PathNum][ants[i].Pos])
 				endDisplaying = false
 				ants[i].Pos++
 				if i != len(ants)-1 {
@@ -91,7 +91,8 @@ func displayPathAnts(bestComb [][]string, antsByPath []int) {
 					fmt.Print("\n")
 				}
 			} else {
-				ants = slices.Delete(ants, i, i)
+				ants = slices.Delete(ants, i, i+1)
+				i--
 			}
 		}
 	}
