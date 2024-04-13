@@ -8,7 +8,7 @@ import (
 )
 
 func getFile() error {
-	if len(os.Args) != 2 && os.Args[2] != "--test" {
+	if len(os.Args) != 2 {
 		return errors.New("incorrect format args")
 	}
 	file, notFound := os.ReadFile(os.Args[1])
