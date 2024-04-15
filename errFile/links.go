@@ -34,6 +34,10 @@ func initLinks() error {
 }
 
 func validLink(row string, names []string) (string, string, error) {
+	if len(names)-1 < 0 {
+		return "", "", errors.New("bad format links")
+	}
+	
 	for i, name1 := range names[:len(names)-1] {
 		for _, name2 := range names[i+1:] {
 
@@ -48,7 +52,7 @@ func validLink(row string, names []string) (string, string, error) {
 func duplicatedLink(name1, name2 string) error {
 	for _, link := range farm.Links {
 		if name1 == link[0] && name2 == link[1] || name1 == link[1] && name2 == link[0] {
-			return errors.New("duplicated link" + " " + link[0] + " "+ link[1])
+			return errors.New("duplicated link")
 		}
 	}
 	return nil

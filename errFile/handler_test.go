@@ -1,6 +1,7 @@
 package errFile
 
 import (
+	"fmt"
 	"os"
 	"slices"
 	"strings"
@@ -8,7 +9,7 @@ import (
 )
 
 func contentFile() []string {
-	fileContent, notFound := os.ReadFile("../FILES/test.txt")
+	fileContent, notFound := os.ReadFile("../FILES/fileForTests.txt")
 	if notFound != nil {
 		return nil
 	}
@@ -73,19 +74,106 @@ func TestInitRooms(t *testing.T) {
 		t.Fail()
 	}
 
+	farm.Rooms = make(map[string]*Room)
 	farm.FileRows[1] = "2 errorX 2"
 	if initRooms().Error() != "invalid room" {
 		t.Fail()
 	}
-	
+
+	farm.Rooms = make(map[string]*Room)
 	farm.FileRows[1] = "2 errorX errorY"
 	if initRooms().Error() != "invalid room" {
 		t.Fail()
 	}
 
+	farm.Rooms = make(map[string]*Room)
 	farm.FileRows[1] = "0 0 3"
 	farm.FileRows[2] = "0 0 3"
 	if initRooms().Error() != "duplicated room" {
 		t.Fail()
 	}
+
+	farm.Rooms = make(map[string]*Room)
+	farm.FileRows[2] = "2 2 5"
+	if initRooms() != nil {
+		t.Fail()
+	}
+}
+
+func TestInitEndpoints(t *testing.T) {
+	start := farm.Rooms["0"]
+	end := farm.Rooms["1"]
+
+	delete(farm.Rooms, "0")
+	if initEndpoints().Error() != "invalid endpoint" {
+		t.Fail()
+	}
+
+	farm.Rooms["0"] = start
+	farm.End.Name = ""
+	delete(farm.Rooms, "1")
+	if initEndpoints().Error() != "invalid endpoint" {
+		t.Fail()
+	}
+
+	farm.Start.Name = ""
+	farm.End.Name = ""
+	delete(farm.Rooms, "0")
+	if initEndpoints().Error() != "invalid endpoint" {
+		t.Fail()
+	}
+
+	farm.Rooms["0"] = start
+	farm.Rooms["1"] = end
+	if initEndpoints() != nil {
+		t.Fail()
+	}
+}
+
+func TestInitLinks(t *testing.T) {
+	farm.FileRows[6] = "0-8"
+	if initLinks().Error() != "bad format links" {
+		t.Fail()
+	}
+
+	farm.Links = nil
+	farm.FileRows[6] = "8-0"
+	if initLinks().Error() != "bad format links" {
+		t.Fail()
+	}
+
+	farm.Links = nil
+	farm.FileRows[6] = "8-"
+	if initLinks().Error() != "bad format links" {
+		t.Fail()
+	}
+
+	farm.Links = nil
+	farm.FileRows[6] = " -2"
+	if initLinks().Error() != "bad format links" {
+		t.Fail()
+	}
+
+	farm.Links = nil
+	farm.FileRows[6] = "0-2"
+	farm.FileRows[7] = "0-2"
+	if initLinks().Error() != "duplicated link" {
+		t.Fail()
+	}
+
+	farm.Links = nil
+	farm.FileRows[7] = "2-0"
+	if initLinks().Error() != "duplicated link" {
+		t.Fail()
+	}
+
+	farm.Links = nil
+	farm.FileRows[7] = "2-3"
+	if initLinks() != nil {
+		t.Fail()
+	}
+}
+
+func TestCheckLengthFile(t *testing.T) {
+	fmt.Println(countRows)
 }
