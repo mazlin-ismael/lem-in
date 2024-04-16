@@ -1,7 +1,7 @@
 package errFile
 
 import (
-	"fmt"
+	// algo "lem-in/algo"
 	"os"
 	"slices"
 	"strings"
@@ -175,5 +175,75 @@ func TestInitLinks(t *testing.T) {
 }
 
 func TestCheckLengthFile(t *testing.T) {
-	fmt.Println(countRows)
+	countRows = 0
+	initRooms()
+	initLinks()
+	if checkLengthFile() != nil {
+		t.Fail()
+	}
+
+	farm.FileRows = append(farm.FileRows, "")
+	countRows = 0
+	initRooms()
+	initLinks()
+	if checkLengthFile().Error() != "invalid rows" {
+		t.Fail()
+	}
+
+	farm.FileRows = slices.Replace(farm.FileRows, len(farm.FileRows)-1, len(farm.FileRows), "#comm")
+	countRows = 0
+	initRooms()
+	initLinks()
+	if checkLengthFile() != nil {
+		t.Fail()
+	}
+
+	farm.FileRows = slices.Replace(farm.FileRows, len(farm.FileRows)-1, len(farm.FileRows), "\n")
+	countRows = 0
+	initRooms()
+	initLinks()
+	if checkLengthFile().Error() != "invalid rows" {
+		t.Fail()
+	}
+
+	farm.FileRows = slices.Replace(farm.FileRows, len(farm.FileRows)-1, len(farm.FileRows), "L6 8 8")
+	countRows = 0
+	initRooms()
+	initLinks()
+	if checkLengthFile().Error() != "invalid rows" {
+		t.Fail()
+		return
+	}
+}
+
+func TestNumberAnts(t *testing.T) {
+	firstline = "-1"
+	if numberAnts().Error() != "ants number can't be zero or negetive" {
+		t.Fail()
+	}
+
+	firstline = "0"
+	if numberAnts().Error() != "ants number can't be zero or negetive" {
+		t.Fail()
+	}
+
+	firstline = "str"
+	if numberAnts().Error() != "bad ants number format" {
+		t.Fail()
+	}
+
+	firstline = "\n"
+	if numberAnts().Error() != "bad ants number format" {
+		t.Fail()
+	}
+
+	firstline = ""
+	if numberAnts().Error() != "bad ants number format" {
+		t.Fail()
+	}
+
+	firstline = "10"
+	if numberAnts() != nil {
+		t.Fail()
+	}
 }

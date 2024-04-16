@@ -29,7 +29,6 @@ func initLinks() error {
 
 		}
 	}
-	countRows = countRows + len(farm.Links)
 	return nil
 }
 

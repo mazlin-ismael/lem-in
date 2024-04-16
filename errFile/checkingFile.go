@@ -22,6 +22,15 @@ func getFile() error {
 }
 
 func checkLengthFile() error {
+	countRows = countRows + len(farm.Links)
+	countRows = countRows + len(farm.Rooms)
+
+	for _, row := range farm.FileRows { 
+		if len(row) > 0 && row[0] == '#' {
+			countRows++
+		}
+	}
+	
 	if countRows != len(farm.FileRows) {
 		return errors.New("invalid rows")
 	}
@@ -33,8 +42,8 @@ func numberAnts() error {
 	if notInt != nil {
 		return errors.New("bad ants number format")
 	}
-	if numberAnts == 0 {
-		return errors.New("ants number can't be zero")
+	if numberAnts <= 0 {
+		return errors.New("ants number can't be zero or negetive")
 	}
 	farm.Ants = numberAnts
 	return nil

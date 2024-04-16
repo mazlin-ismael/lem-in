@@ -28,9 +28,6 @@ func initRooms() error {
 		rowSplit := strings.Fields(row)
 
 		if len(rowSplit) == 0 || rowSplit[0][0] == '#' || rowSplit[0][0] == 'L' {
-			if len(rowSplit) > 0 && rowSplit[0][0] == '#' {
-				countRows++
-			}
 			continue
 		}
 
@@ -48,7 +45,6 @@ func initRooms() error {
 			farm.Rooms[rowSplit[0]] = &Room{x, y, pos, rowSplit[0], nil, nil, 0, 0}
 		}
 	}
-	countRows = countRows + len(farm.Rooms)
 	return nil
 }
 
