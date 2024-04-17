@@ -1,5 +1,4 @@
 var dataView = document.getElementById("datasView")
-var view = document.querySelector(".view")
 var rooms = dataView.getElementsByClassName("room")
 var relations = dataView.getElementsByClassName("relation")
 var farm = document.getElementById("farm")
@@ -40,6 +39,7 @@ function setFarmVizualiser() {
         farm.appendChild(newRoom)
     }
     
+    // display the points on screen with their x and y
     for (let index = 0; index < relations.length; index++) {
         const relation = relations[index]
         const firstRoom = relation.querySelector(".firstRoom")
@@ -56,10 +56,11 @@ function setFarmVizualiser() {
     }
 }
 
+// trace lines between points
 function traceLine(x1, x2, y1, y2) {
     distance = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2))
-    xMid = (x1+x2) / 2
-    yMid = (y1+y2) / 2
+    var xMid = (x1+x2) / 2
+    var yMid = (y1+y2) / 2
 
     slopeInRadian = Math.atan2(y1-y2, x1-x2)
     slopeInDegrees = slopeInRadian * 180 / Math.PI
