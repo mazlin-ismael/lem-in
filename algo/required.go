@@ -14,10 +14,9 @@ func (farm *FarmProperties) initRelations() {
 		farm.Rooms[link[0]].LinkedRooms = append(farm.Rooms[link[0]].LinkedRooms, farm.Rooms[link[1]])
 		farm.Rooms[link[1]].LinkedRooms = append(farm.Rooms[link[1]].LinkedRooms, farm.Rooms[link[0]])
 	}
-	errFile.CheckFunc(checkPossiblePath)
 }
 
-func checkPossiblePath() error {
+func CheckPossiblePath() error {
 	current := farm.Rooms[farm.Start.Name]
 	var prevRoom *errFile.Room
 	end := farm.Rooms[farm.End.Name]

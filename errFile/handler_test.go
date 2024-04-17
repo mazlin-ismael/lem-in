@@ -1,7 +1,6 @@
 package errFile
 
 import (
-	// algo "lem-in/algo"
 	"os"
 	"slices"
 	"strings"
