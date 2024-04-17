@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lem-in 2d</title>
+    <link href="/visualizer/static/css/main.css" type="text/css" rel="stylesheet">
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@v0.163.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.163.0/examples/jsm/"
+          }
+        }
+      </script>
+</head>
+<body>
+    <div class="rooms hidden">
+        <div class="EndPointStart">{{.Start}}</div>
+        <div class="EndPointEnd">{{.End}}</div>
+        {{range .Rooms}}
+            <div class="room">
+                <div class="x">{{.X}}</div>
+                <div class="y">{{.Y}}</div>
+                <div class="name">{{.Name}}</div>
+            </div>
+        {{end}}
+    </div>
+    <div class="links hidden">
+        {{range .Links}}
+            <div class="relation">
+                <div class="firstRoom">{{index . 0}}</div>
+                <div class="secondRoom">{{index . 1}}</div>
+            </div>
+        {{end}}
+    </div>
+    <script type="module" src="/visualizer/static/js/main3d.js"></script>
+</body>
+</html>
