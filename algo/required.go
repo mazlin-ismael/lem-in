@@ -5,10 +5,12 @@ import (
 	errFile "lem-in/errFile"
 )
 
+// Initialize the farm with the provided base properties
 func initFarm(farmBase errFile.FarmProperties) {
 	farm = FarmProperties(farmBase)
 }
 
+// Initialize the relations between the rooms in the farm
 func (farm *FarmProperties) initRelations() {
 	for _, link := range farm.Links {
 		farm.Rooms[link[0]].LinkedRooms = append(farm.Rooms[link[0]].LinkedRooms, farm.Rooms[link[1]])
@@ -16,7 +18,8 @@ func (farm *FarmProperties) initRelations() {
 	}
 }
 
-func CheckPossiblePath() error {
+// Check if there is a possible path between the endpoints start and end
+func checkPossiblePath() error {
 	current := farm.Rooms[farm.Start.Name]
 	var prevRoom *errFile.Room
 	end := farm.Rooms[farm.End.Name]

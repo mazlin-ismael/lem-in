@@ -7,7 +7,7 @@ import (
 func Handler(farmBase errFile.FarmProperties) ([][]string, []int) {
 	initFarm(farmBase)
 	farm.initRelations()
-	errFile.CheckFunc(CheckPossiblePath)
+	errFile.CheckFunc(checkPossiblePath)
 	farm.initPaths()
 	bestsCombs := farm.optimalPaths()
 	return(movingAnts(bestsCombs))

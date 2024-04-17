@@ -5,7 +5,7 @@ import (
 	"slices"
 )
 
-
+// Create paths combination and return it with the best combinations
 func initFirstComb(alonePaths [][]string) ([][][]string, [][][]string) {
 	var combsPaths [][][]string
 	var shortestPath int = len(alonePaths[0])
@@ -25,6 +25,11 @@ func initFirstComb(alonePaths [][]string) ([][][]string, [][][]string) {
 	return combsPaths, bestsCombsPaths
 }
 
+/*
+take the current combinations and the paths to add,
+check if they are already in the combinations and add them if they are not,
+it returns the new combinations and the best ones
+*/
 func initCombs(currentCombs[][][]string, pathsToAdd [][]string) ([][][]string, [][]string) {
 	var combsPaths [][][]string
 	for i := 0; i < len(pathsToAdd); i++ {
@@ -56,6 +61,7 @@ func initCombs(currentCombs[][][]string, pathsToAdd [][]string) ([][][]string, [
 	return  combsPaths, initBestComb(combsPaths)
 }
 
+// Take the paths combinations and determines which one is the best by comparing them to each other
 func initBestComb(combsPaths [][][]string) [][]string {
 	var shortestComb int
 	var bestComb [][]string

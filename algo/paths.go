@@ -6,16 +6,19 @@ import (
 	"reflect"
 )
 
+// Initialize the paths in the farm
 func (farm *FarmProperties) initPaths() {
 	start := farm.Rooms[farm.Start.Name]
 	end := farm.Rooms[farm.End.Name]
 	current := start
 	var prevRoom *errFile.Room
 
+	// Reset PrevRoom for all rooms
 	for _, room := range farm.Rooms {
 		room.PrevRoom = nil
 	}
 
+	// Go through all rooms to find paths to the end
 	for {
 		for current != end {
 			for current.NextPos >= len(current.LinkedRooms) {
@@ -46,6 +49,7 @@ func (farm *FarmProperties) initPaths() {
 	}
 }
 
+// savePaths saves the paths found during initPaths
 func savePaths(current *errFile.Room) {
 	var path []string
 	var inArray bool
@@ -54,22 +58,27 @@ func savePaths(current *errFile.Room) {
 			current = current.PrevRoom
 		}
 
+		// Check if the path already exists in paths
 		for _, savePath := range paths {
 			if reflect.DeepEqual(savePath, path) {
 				inArray = true
 			}
 		}
+		// If not, append it to paths
 		if !inArray {
 			paths = append(paths, path)
 		}
 }
 
+// Find the optimal paths based on farm properties
 func (farm *FarmProperties) optimalPaths() [][][]string {
+	// Determine the maximum number of paths to consider
 	maxPath := int(math.Min(float64(len(farm.Rooms[farm.Start.Name].LinkedRooms)), float64(len(farm.Rooms[farm.End.Name].LinkedRooms))))
 	if farm.Ants < maxPath {
 		maxPath = farm.Ants
 	}
 	
+	// Initialize combinations and bestCombPaths
 	combsPaths, bestCombsPaths := initFirstComb(paths)
 	var bestCombPaths [][]string
 

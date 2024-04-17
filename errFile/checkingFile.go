@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Get the argument file, create a version split by rows + check the file format
 func getFile() error {
 	if len(os.Args) != 2 {
 		return errors.New("incorrect format args")
@@ -21,6 +22,7 @@ func getFile() error {
 	return nil
 }
 
+// Check the number of rows
 func checkLengthFile() error {
 	countRows = countRows + len(farm.Links)
 	countRows = countRows + len(farm.Rooms)
@@ -37,6 +39,7 @@ func checkLengthFile() error {
 	return nil
 }
 
+// Get the number of ants and check if it is valid
 func numberAnts() error {
 	numberAnts, notInt := strconv.Atoi(firstline)
 	if notInt != nil {

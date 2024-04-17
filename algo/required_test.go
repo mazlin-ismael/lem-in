@@ -16,7 +16,7 @@ func TestCheckPossiblePath(t *testing.T) {
 	farm.Links = append(farm.Links[0:1], farm.Links[2:]...)
 	farm.initRelations()
 
-	if CheckPossiblePath().Error() != "no path between start and end" {
+	if checkPossiblePath().Error() != "no path between start and end" {
 		t.Fail()
 	}
 
@@ -27,7 +27,7 @@ func TestCheckPossiblePath(t *testing.T) {
 	}
 
 	farm.initRelations()
-	if CheckPossiblePath() != nil {
+	if checkPossiblePath() != nil {
 		t.Fail()
 	}
 }

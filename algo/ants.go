@@ -5,6 +5,7 @@ import (
 	"slices"
 )
 
+// Calculation of the shortest combination of paths the ants must take and return the number of ants to send
 func movingAnts(bestsCombs [][][]string) ([][]string, []int) {
 	var shortestComb [][]string
 	var bestAntsByPath   []int
@@ -23,6 +24,7 @@ func movingAnts(bestsCombs [][][]string) ([][]string, []int) {
 	return shortestComb, bestAntsByPathSaved
 }
 
+// Sort paths by lenght and calculates the number of ants that must take each paths
 func antsToSend(comb [][]string) (combSorted [][]string, antsByPath []int){
 	for i := 0; i < len(comb)-1; i++ {
 		for j := i+1; j < len(comb); j++ {
@@ -55,6 +57,7 @@ func antsToSend(comb [][]string) (combSorted [][]string, antsByPath []int){
 	return comb, numbersAnts
 }
 
+// Print the ants movement in the rooms turn by turn
 func displayPathAnts(bestComb [][]string, antsByPath []int) {
 	var ants []Ant
 	var endDisplaying bool
