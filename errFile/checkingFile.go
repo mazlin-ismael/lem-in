@@ -46,7 +46,7 @@ func numberAnts() error {
 		return errors.New("bad ants number format")
 	}
 	if numberAnts <= 0 {
-		return errors.New("ants number can't be zero or negetive")
+		return errors.New("ants number can't be zero or negative")
 	}
 	farm.Ants = numberAnts
 	return nil
