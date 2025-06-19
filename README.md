@@ -1,7 +1,7 @@
 # lem-in | imazlin | bdesouza
 
 ### VIDEO PROJET PRESENTATION
-👉 [Net-Cat Demo](https://streamable.com/pt8kti)
+👉 [Lem-in Demo](https://streamable.com/pt8kti)
 
 ## REQUIRED
 
