@@ -1,6 +1,7 @@
-# lem-in
+# lem-in | imazlin | bdesouza
 
-# net-cat | imazlin | bdesouza
+### VIDEO PROJET PRESENTATION
+👉 [Net-Cat Demo](https://streamable.com/vb5aoo)
 
 ## REQUIRED
 
@@ -23,7 +24,7 @@ After launching the project with vscode you can open
 a new terminal in the top of page  
 1. Write in the terminal 
 ```
-go mod init NETCAT
+go mod init lem-in
 ```
 2. On the same terminal execute the command
 ```
