@@ -217,12 +217,12 @@ func TestCheckLengthFile(t *testing.T) {
 
 func TestNumberAnts(t *testing.T) {
 	firstline = "-1"
-	if numberAnts().Error() != "ants number can't be zero or negetive" {
+	if numberAnts().Error() != "ants number can't be zero or negative" {
 		t.Fail()
 	}
 
 	firstline = "0"
-	if numberAnts().Error() != "ants number can't be zero or negetive" {
+	if numberAnts().Error() != "ants number can't be zero or negative" {
 		t.Fail()
 	}
 

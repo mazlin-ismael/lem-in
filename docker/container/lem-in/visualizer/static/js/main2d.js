@@ -1,5 +1,4 @@
 var dataView = document.getElementById("datasView")
-var view = document.querySelector(".view")
 var rooms = dataView.getElementsByClassName("room")
 var relations = dataView.getElementsByClassName("relation")
 var farm = document.getElementById("farm")
@@ -10,6 +9,10 @@ var end = document.querySelector(".EndPointEnd").textContent
 
 var comb = document.getElementsByClassName("pathsComb")
 var antsPaths = document.getElementsByClassName("antsbyPaths")
+
+var timeouts = [];
+var newSalveTimeout = null;
+
 
 function setFarmVizualiser() {
     farm.replaceChildren()
@@ -40,6 +43,7 @@ function setFarmVizualiser() {
         farm.appendChild(newRoom)
     }
     
+    // display the points on screen with their x and y
     for (let index = 0; index < relations.length; index++) {
         const relation = relations[index]
         const firstRoom = relation.querySelector(".firstRoom")
@@ -56,10 +60,11 @@ function setFarmVizualiser() {
     }
 }
 
+// trace lines between points
 function traceLine(x1, x2, y1, y2) {
     distance = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2))
-    xMid = (x1+x2) / 2
-    yMid = (y1+y2) / 2
+    var xMid = (x1+x2) / 2
+    var yMid = (y1+y2) / 2
 
     slopeInRadian = Math.atan2(y1-y2, x1-x2)
     slopeInDegrees = slopeInRadian * 180 / Math.PI
@@ -122,7 +127,7 @@ function initStartAnts(x, y) {
     
     for (index = 0; index < numberAnts; index++) {
         var img = document.createElement("img")
-        img.src = "/visualizer/static/img/ethant.webp"
+        img.src = "/visualizer/static/img/ant.png"
         img.alt = "ant" + (index + 1)
         img.className = "ant"
         img.style.left = x + "%"
@@ -167,7 +172,7 @@ function movingAntsOnPaths() {
             }
         }
         if (allAntsLaunched == false) {
-            setTimeout(newSalve, 1100)
+            newSalveTimeout = setTimeout(newSalve, 1100)
         }
     }
     newSalve()
@@ -182,8 +187,26 @@ async function movingAnt(ant, path) {
             ant.style.left = nextRoom.style.left
             ant.style.top = nextRoom.style.top
             index++
-            setTimeout(moveToNextRoom, 1100)
+            let timeoutId = setTimeout(moveToNextRoom, 1100);
+            timeouts.push(timeoutId);
         }
     }
     moveToNextRoom()
+}
+
+function resetAnts() {
+    clearAllTimeouts();
+    setFarmVizualiser();
+}
+
+
+function clearAllTimeouts() {
+    for (let i = 0; i < timeouts.length; i++) {
+        clearTimeout(timeouts[i]);
+    }
+    if (newSalveTimeout) {
+        clearTimeout(newSalveTimeout);
+        newSalveTimeout = null;
+    }
+    timeouts = [];
 }
